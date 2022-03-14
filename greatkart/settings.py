@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os.path
 from pathlib import Path
 from decouple import config
+import os
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -23,10 +24,12 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+# SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', default=True, cast=bool)
+# DEBUG = config('DEBUG', default=True, cast=bool)
+DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -101,15 +104,26 @@ AUTH_USER_MODEL = 'accounts.Account'
 #         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
-config('SECRET_KEY')
+
+# DATABASES = {
+#    'default': {
+#       'ENGINE': config('ENGINE'),
+#       'NAME': config('NAME'),
+#       'USER': config('USER'),
+#       'PASSWORD': config('PASSWORD'),
+#       'HOST': config('HOST'),
+#       'PORT': config('PORT'),
+#    }
+# }
+
 DATABASES = {
    'default': {
-      'ENGINE': config('ENGINE'),
-      'NAME': config('NAME'),
-      'USER': config('USER'),
-      'PASSWORD': config('PASSWORD'),
-      'HOST': config('HOST'),
-      'PORT': config('PORT'),
+      'ENGINE': os.environ.get('ENGINE'),
+      'NAME': os.environ.get('NAME'),
+      'USER': os.environ.get('USER'),
+      'PASSWORD': os.environ.get('PASSWORD'),
+      'HOST': os.environ.get('HOST'),
+      'PORT': os.environ.get('PORT'),
    }
 }
 
@@ -169,12 +183,19 @@ MESSAGE_TAGS = {
 
 
 # SMTP configuration
-EMAIL_BACKEND = config('EMAIL_BACKEND')
-EMAIL_HOST = config('EMAIL_HOST')
-EMAIL_PORT = config('EMAIL_PORT', cast=int)
-EMAIL_HOST_USER = config('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
-EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+# EMAIL_BACKEND = config('EMAIL_BACKEND')
+# EMAIL_HOST = config('EMAIL_HOST')
+# EMAIL_PORT = config('EMAIL_PORT', cast=int)
+# EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+# EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+# EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
+
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND')
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 
 
 # Configure Django App for Heroku.
